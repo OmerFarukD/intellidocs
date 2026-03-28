@@ -1,0 +1,42 @@
+# docker-compose.yml
+version: "3.9"
+
+services:
+
+  # ── PostgreSQL ──────────────────────────────
+  postgres:
+    image: postgres:16
+    container_name: intellidocs_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: intellidocs
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # veri kaybolmasın
+
+  # ── ChromaDB ────────────────────────────────
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: intellidocs_chroma
+    ports:
+      - "8001:8000"
+    volumes:
+      - chroma_data:/chroma/chroma  # veri kaybolmasın
+
+  # ── FastAPI ─────────────────────────────────
+  fastapi:
+    build: .
+    container_name: intellidocs_api
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - postgres
+      - chromadb
+
+volumes:
+  postgres_data:
+  chroma_data:
