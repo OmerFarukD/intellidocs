@@ -5,7 +5,7 @@ from alembic import context
 
 from app.core.config import settings
 from app.core.database import Base
-from app.models import user
+from app.models import user,document
 
 config = context.config
 
