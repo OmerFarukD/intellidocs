@@ -13,5 +13,4 @@ class Document(Base):
     user_id: Mapped[int] = mapped_column(ForeignKey('users.id'))
     filename: Mapped[str] = mapped_column(String(255))
     chroma_collection_id: Mapped[str] = mapped_column(String(255))
-    uploaded_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now())
-
+    uploaded_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.now)
